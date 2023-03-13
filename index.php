@@ -17,6 +17,18 @@
 *   Dare all'utente anche la possibilità di permettere o meno la ripetizione di caratteri uguali. */
 
 echo $len_password = $_GET["password"];
+
+function randomPassword($len) {
+    $elements = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    $elementsLen = strlen($elements) - 1;
+    $password = array[];
+    foreach($i = 0; $i < $len; $i++) {
+        $n = rand(0, $elementsLen);
+        $password[] = $elements[$n];
+    }
+
+    print(implode($password));
+}
 ?>
 
 
@@ -31,11 +43,15 @@ echo $len_password = $_GET["password"];
 </head>
 
 <body>
+
     <form method="GET">
         <label for="password"> Inserisci la lunghezza che deve avere la tua password</label>
         <input type="text" id="password" name="password">
         <button>Invia</button>
     </form>
+
+    <p> La password generata è: <?php randomPassword($len_password); ?></p>
+
 </body>
 
 </html>
