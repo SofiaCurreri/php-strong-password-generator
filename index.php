@@ -16,9 +16,7 @@
 *   Gestire ulteriori parametri per la password: quali caratteri usare fra numeri, lettere e simboli. Possono essere scelti singolarmente (es. solo numeri) oppure possono essere combinati fra loro (es. numeri e simboli, oppure tutti e tre insieme).
 *   Dare all'utente anche la possibilità di permettere o meno la ripetizione di caratteri uguali. */
 
-
 include __DIR__ . '/functions.php';
-
 ?>
 
 
@@ -39,8 +37,8 @@ include __DIR__ . '/functions.php';
         <input type="text" id="password" name="password">
         <button>Invia</button>
     </form>
-    <!-- 
-    <p> La password generata è: <?php randomPassword($len_password); ?></p> -->
+
+    <p> La password generata è: <?php randomPassword($len_password); ?></p>
 
 </body>
 
