@@ -16,13 +16,13 @@
 *   Gestire ulteriori parametri per la password: quali caratteri usare fra numeri, lettere e simboli. Possono essere scelti singolarmente (es. solo numeri) oppure possono essere combinati fra loro (es. numeri e simboli, oppure tutti e tre insieme).
 *   Dare all'utente anche la possibilità di permettere o meno la ripetizione di caratteri uguali. */
 
-echo $len_password = $_GET["password"];
+$len_password = $_GET["password"];
 
 function randomPassword($len) {
     $elements = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
     $elementsLen = strlen($elements) - 1;
     $password = [];
-    foreach($i = 0; $i < $len; $i++) {
+    for($i = 0; $i < $len; $i++) {
         $n = rand(0, $elementsLen);
         $password[] = $elements[$n];
     }
