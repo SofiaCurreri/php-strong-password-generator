@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $len_password = $_GET["password"];
 
 function randomPassword($len) {
@@ -9,7 +10,9 @@ function randomPassword($len) {
         $n = rand(0, $elementsLen);
         $password[] = $elements[$n];
     }
-
+    
     print(implode($password));
 }
+$_SESSION['generate_password'] = $generate_password;
+header("location: /show-password.php");
 ?>
