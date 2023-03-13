@@ -16,6 +16,7 @@
 *   Gestire ulteriori parametri per la password: quali caratteri usare fra numeri, lettere e simboli. Possono essere scelti singolarmente (es. solo numeri) oppure possono essere combinati fra loro (es. numeri e simboli, oppure tutti e tre insieme).
 *   Dare all'utente anche la possibilità di permettere o meno la ripetizione di caratteri uguali. */
 
+echo $len_password = $_GET["password"];
 ?>
 
 
@@ -30,7 +31,11 @@
 </head>
 
 <body>
-
+    <form method="GET">
+        <label for="password"> Inserisci la lunghezza che deve avere la tua password</label>
+        <input type="text" id="password" name="password">
+        <button>Invia</button>
+    </form>
 </body>
 
 </html>
