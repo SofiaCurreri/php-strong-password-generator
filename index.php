@@ -28,17 +28,52 @@ include __DIR__ . '/functions.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP Strong Password Generator</title>
+
+    <!-- CDN Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 
 <body>
+    <main>
+        <div class="container mt-5">
 
-    <form method="GET">
-        <label for="password"> Inserisci la lunghezza che deve avere la tua password</label>
-        <input type="text" id="password" name="password">
-        <button>Invia</button>
-    </form>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1> Password Generator </h1>
+                        </div>
+                        <div class="card-body">
+                            <?php if(!isset($generated_password)) : ?>
+                            <form method="GET" class="row">
+                                <div class="col-7">
+                                    <div class="mb-3">
+                                        <label for="password_length" class="form-label"> Lunghezza password </label>
+                                        <input type="number" class="form-control" min=1 id="password_length"
+                                            name="password_length">
+                                    </div>
+                                </div>
+                                <div class="col-5 ">
+                                    <div style="margin: 2rem">
+                                        <button class="btn btn-primary"> Genera Password </button>
+                                    </div>
+                                </div>
+                            </form>
 
-    <p> La password generata è: <?php randomPassword($len_password); ?></p>
+                            <?php else : ?>
+                            <div class="alert alert-success" role="alert">
+                                La password è stata generata correttamente:
+                                <strong><?php echo implode($generated_password) ?></strong>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
 
 </body>
 
