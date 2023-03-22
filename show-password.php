@@ -33,7 +33,7 @@ include __DIR__ . '/index.php';
 
                             <div class="alert alert-success" role="alert">
                                 La password è stata generata correttamente:
-                                <strong><?php echo implode($generated_password) ?></strong>
+                                <strong><?php echo $generated_password ?></strong>
                             </div>
 
                         </div>

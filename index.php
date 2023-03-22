@@ -25,19 +25,24 @@ if(!empty($_GET)) {
     $specials = "!$%&/()=?[]\{}-_";
 
     $len_password = (int) $_GET["password_length"] ?? 5;        
-    $all_chars = $alphabet . $alphabetUC . $numbers . $specials;
-
+    $all_chars = $alphabet . $alphabet_uc . $numbers . $specials;
+    $allow_repetitions = isset($_GET["allow_repetitions"]) ? true : false;
+    
     $allowed_chars = "";
-
+    
     if(isset($_GET["allowed_alphabet_lc"])) $allowed_chars .= $alphabet;
     if(isset($_GET["allowed_alphabet_uc"])) $allowed_chars .= $alphabet_uc;
     if(isset($_GET["allowed_numbers"])) $allowed_chars .= $numbers;
     if(isset($_GET["allowed_specials"])) $allowed_chars .= $specials;
-
+    
     if(empty($allowed_chars)) $allowed_chars .= $all_chars;
     
+    if(!$allow_repetitions && ($len_password > strlen($allowed_chars))) {
+        $allow_repetitions = true;
+    }
+    
     session_start();
-    $_SESSION["generated_password"] = randomPassword($allowed_chars, $len_password);
+    $_SESSION["generated_password"] = randomPassword($allowed_chars, $len_password, $allow_repetitions);
     header("Location: ./show-password.php");
 }
 ?>
@@ -121,6 +126,22 @@ if(!empty($_GET)) {
                                     </div>
 
                                     <div class="row">
+                                        <div class="col-7">
+                                            <div class="mb-3">
+                                                <label for="password_length" class="form-label"> Permetti ripetizioni
+                                                </label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="allow_repetitions" name="allow_repetitions">
+                                                    <label class="form-check-label" for="allow_repetitions">
+                                                        Sì
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-5 ">
                                             <div class="my-3">
                                                 <button class="btn btn-primary"> Genera Password </button>
@@ -133,7 +154,7 @@ if(!empty($_GET)) {
                             <?php else : ?>
                             <div class="alert alert-success" role="alert">
                                 La password è stata generata correttamente:
-                                <strong><?php echo implode($generated_password) ?></strong>
+                                <strong><?php echo $generated_password ?></strong>
                             </div>
                             <?php endif; ?>
                         </div>
