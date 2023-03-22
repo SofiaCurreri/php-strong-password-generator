@@ -11,8 +11,4 @@ function randomPassword($allowed_chars, $len) {
     return $password;
 }
 
-
-
-/**$_SESSION['generate_password'] = $generate_password;
-header("location: /show-password.php"); */
 ?>

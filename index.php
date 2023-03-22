@@ -20,15 +20,24 @@ require_once(__DIR__ . './functions.php');
 
 if(!empty($_GET)) {
     $alphabet = "abcdefghijklmnopqrstuvwxyz";
-    $alphabetUC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $alphabet_uc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     $numbers = "1234567890";
     $specials = "!$%&/()=?[]\{}-_";
 
     $len_password = (int) $_GET["password_length"] ?? 5;        
     $all_chars = $alphabet . $alphabetUC . $numbers . $specials;
+
+    $allowed_chars = "";
+
+    if(isset($_GET["allowed_alphabet_lc"])) $allowed_chars .= $alphabet;
+    if(isset($_GET["allowed_alphabet_uc"])) $allowed_chars .= $alphabet_uc;
+    if(isset($_GET["allowed_numbers"])) $allowed_chars .= $numbers;
+    if(isset($_GET["allowed_specials"])) $allowed_chars .= $specials;
+
+    if(empty($allowed_chars)) $allowed_chars .= $all_chars;
     
     session_start();
-    $_SESSION["generated_password"] = randomPassword($all_chars, $len_password);
+    $_SESSION["generated_password"] = randomPassword($allowed_chars, $len_password);
     header("Location: ./show-password.php");
 }
 ?>
@@ -58,19 +67,65 @@ if(!empty($_GET)) {
                         <div class="card-header">
                             <h1> Password Generator </h1>
                         </div>
+
                         <div class="card-body">
                             <?php if(!isset($generated_password)) : ?>
                             <form method="GET" class="row">
-                                <div class="col-7">
-                                    <div class="mb-3">
-                                        <label for="password_length" class="form-label"> Lunghezza password </label>
-                                        <input type="number" class="form-control" min=1 id="password_length"
-                                            name="password_length">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="mb-3">
+                                                <label for="password_length" class="form-label"> Lunghezza password
+                                                </label>
+                                                <input type="number" class="form-control" min=1 id="password_length"
+                                                    name="password_length">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-5 ">
-                                    <div style="margin: 2rem">
-                                        <button class="btn btn-primary"> Genera Password </button>
+
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div class="mb-3">
+                                                <label for="password_length" class="form-label"> Caratteri permessi
+                                                </label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="allowed_alphabet_lc" name="allowed_alphabet_lc">
+                                                    <label class="form-check-label" for="allowed_alphabet_lc">
+                                                        Alfabeto minuscolo
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="allowed_alphabet_uc" name="allowed_alphabet_uc">
+                                                    <label class="form-check-label" for="allowed_alphabet_uc">
+                                                        Alfabeto maiuscolo
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="allowed_numbers" name="allowed_numbers">
+                                                    <label class="form-check-label" for="allowed_numbers">
+                                                        Numeri
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value=""
+                                                        id="allowed_specials" name="allowed_specials">
+                                                    <label class="form-check-label" for="allowed_specials">
+                                                        Caratteri speciali
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-5 ">
+                                            <div class="my-3">
+                                                <button class="btn btn-primary"> Genera Password </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
