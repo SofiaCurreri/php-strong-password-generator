@@ -16,7 +16,21 @@
 *   Gestire ulteriori parametri per la password: quali caratteri usare fra numeri, lettere e simboli. Possono essere scelti singolarmente (es. solo numeri) oppure possono essere combinati fra loro (es. numeri e simboli, oppure tutti e tre insieme).
 *   Dare all'utente anche la possibilità di permettere o meno la ripetizione di caratteri uguali. */
 
-include __DIR__ . '/functions.php';
+require_once(__DIR__ . './functions.php');
+
+if(!empty($_GET)) {
+    $alphabet = "abcdefghijklmnopqrstuvwxyz";
+    $alphabetUC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    $numbers = "1234567890";
+    $specials = "!$%&/()=?[]\{}-_";
+
+    $len_password = (int) $_GET["password_length"] ?? 5;        
+    $all_chars = $alphabet . $alphabetUC . $numbers . $specials;
+    
+    session_start();
+    $_SESSION["generated_password"] = randomPassword($all_chars, $len_password);
+    header("Location: ./show-password.php");
+}
 ?>
 
 
